@@ -1,0 +1,7 @@
+services:
+  K3Progetti\JwtBundle\:
+    resource: '../../src/'
+    exclude:
+      - '../../src/DependencyInjection/'
+      - '../../src/Entity/'
+      - '../../src/Tests/'

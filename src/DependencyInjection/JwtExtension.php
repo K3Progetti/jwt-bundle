@@ -2,6 +2,8 @@
 
 namespace K3Progetti\JwtBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 
@@ -22,6 +24,9 @@ class JwtExtension extends Extension
         $container->setParameter('jwt.token_ttl', $config['token_ttl']);
         $container->setParameter('jwt.refresh_token_ttl', $config['refresh_token_ttl']);
 
+        // Carico il services
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../resources/config'));
+        $loader->load('services.yaml');
     }
 
     /**
