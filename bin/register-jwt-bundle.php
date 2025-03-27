@@ -7,11 +7,22 @@ $bundleClass = 'K3Progetti\JwtBundle\JwtBundle::class';
 $bundleLine = "    $bundleClass => ['all' => true],";
 
 $configTarget = $projectRoot . '/config/packages/jwt.yaml';
-echo $configSource = 'resources/config/jwt.yaml.dist';
+$configSource = __DIR__ . '/../resources/config/packages/jwt.yaml.dist';
 
-function green($text) { return "\033[32m$text\033[0m"; }
-function yellow($text) { return "\033[33m$text\033[0m"; }
-function red($text) { return "\033[31m$text\033[0m"; }
+function green($text): string
+{
+    return "\033[32m$text\033[0m";
+}
+
+function yellow($text): string
+{
+    return "\033[33m$text\033[0m";
+}
+
+function red($text): string
+{
+    return "\033[31m$text\033[0m";
+}
 
 echo yellow("🔍 Cercando il file: $bundlesFile\n");
 
