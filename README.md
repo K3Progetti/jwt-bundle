@@ -89,6 +89,6 @@ bin/console jwt:remove-jwt-token-user
 
 ## 🤝 Contributing
 
-Sono aperto a qualsiasi richiesta
+Sono aperto a qualsiasi confronto
 
 ---
