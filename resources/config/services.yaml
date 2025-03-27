@@ -5,3 +5,6 @@ services:
       - '../../src/DependencyInjection/'
       - '../../src/Entity/'
       - '../../src/Tests/'
+  autowire: true
+  autoconfigure: true
+  public: true
