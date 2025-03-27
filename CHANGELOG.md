@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.2...v1.1.3) (2025-03-27)
+
+
+### Features
+
+* aggiunto generazione rotte nel file di configurazione ([11a8605](https://github.com/K3Progetti/jwt-bundle/commit/11a8605df6184258ac60f888c24291a47d29b580))
+
+
+### Bug Fixes
+
+* position ([67486ef](https://github.com/K3Progetti/jwt-bundle/commit/67486ef8c7692254892be3cb4eb0f4b9d240ec8d))
+
 ### [1.1.2](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.1...v1.1.2) (2025-03-27)
 
 ### [1.1.1](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.0...v1.1.1) (2025-03-27)
