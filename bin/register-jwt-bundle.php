@@ -1,24 +1,19 @@
 #!/usr/bin/env php
 <?php
 
-$bundlesFile = __DIR__ . '/../config/bundles.php';
-$bundleClass = K3Progetti\JwtBundle\JwtBundle::class;
+$projectRoot = getcwd();
+$bundlesFile = $projectRoot . '/config/bundles.php';
+$bundleClass = 'K3Progetti\JwtBundle\JwtBundle::class';
 $bundleLine = "    $bundleClass => ['all' => true],";
 
-$configTarget = __DIR__ . '/../config/packages/jwt.yaml';
-$configSource = __DIR__ . '/../resources/config/jwt.yaml.dist';
+$configTarget = $projectRoot . '/config/packages/jwt.yaml';
+echo $configSource = 'resources/config/jwt.yaml.dist';
 
-function green($text) {
-    return "\033[32m$text\033[0m";
-}
+function green($text) { return "\033[32m$text\033[0m"; }
+function yellow($text) { return "\033[33m$text\033[0m"; }
+function red($text) { return "\033[31m$text\033[0m"; }
 
-function yellow($text) {
-    return "\033[33m$text\033[0m";
-}
-
-function red($text) {
-    return "\033[31m$text\033[0m";
-}
+echo yellow("🔍 Cercando il file: $bundlesFile\n");
 
 if (!file_exists($bundlesFile)) {
     echo red("❌ File config/bundles.php non trovato.\n");
@@ -45,11 +40,21 @@ if ($remove) {
     }
 } else {
     if (strpos($contents, $bundleClass) === false) {
-        $pattern = '/return\s+\[(.*?)(\];)/s';
-        $replacement = "return [\n    $bundleClass => ['all' => true],\n$1$2";
-        $newContents = preg_replace($pattern, $replacement, $contents, 1);
-        file_put_contents($bundlesFile, $newContents);
-        echo green("✅ JwtBundle registrato in config/bundles.php\n");
+        $pattern = '/(return\s+\[\n)(.*?)(\n\];)/s';
+
+        if (preg_match($pattern, $contents, $matches)) {
+            $before = $matches[1]; // "return [\n"
+            $middle = rtrim($matches[2]); // bundle già presenti
+            $after = $matches[3]; // "\n];"
+
+            $newMiddle = $middle . "\n" . $bundleLine;
+            $newContents = str_replace($matches[0], $before . $newMiddle . $after, $contents);
+
+            file_put_contents($bundlesFile, $newContents);
+            echo green("✅ JwtBundle aggiunto in fondo a config/bundles.php\n");
+        } else {
+            echo red("❌ Errore durante l'inserimento in config/bundles.php\n");
+        }
     } else {
         echo yellow("ℹ️  JwtBundle è già presente in config/bundles.php\n");
     }
