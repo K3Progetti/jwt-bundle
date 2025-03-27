@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.7](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.6...v1.1.7) (2025-03-27)
+
+
+### Bug Fixes
+
+* autowire ([eab7259](https://github.com/K3Progetti/jwt-bundle/commit/eab725965e0a499f9424ab91ff4837879bd2b2c4))
+
 ### [1.1.6](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.5...v1.1.6) (2025-03-27)
 
 
