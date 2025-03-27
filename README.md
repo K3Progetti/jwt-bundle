@@ -26,13 +26,37 @@ composer require k3progetti/jwt-bundle
 
 ## ⚙️ Configurazione
 
+### 📦 Registrazione del bundle
+
 Aggiungi il bundle al tuo `config/bundles.php` se non viene registrato automaticamente:
 
 ```php
 return [
     // ...
-    JwtBundle\JwtBundle::class => ['all' => true],
+    K3Progetti\JwtBundle\JwtBundle::class => ['all' => true],
 ];
+```
+
+### 🔐 Configurazione del firewall (`config/packages/security.yaml`)
+
+```yaml
+firewalls:
+    api:
+        pattern: ^/api/
+        stateless: true
+        custom_authenticator: K3Progetti\JwtBundle\Security\JwtAuthenticator
+```
+
+---
+
+### 🧱 Migrazioni
+
+Il bundle include due entità: `JwtToken` e `JwtRefreshToken`.  
+Dopo aver installato il bundle, **genera e applica le migrazioni**:
+
+```bash
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
 ```
 
 ---
@@ -43,7 +67,10 @@ return [
 JwtBundle/
 ├── JwtBundle.php
 ├── bin/
-│   └── register-mercure-bundle.php
+│   └── register-jwt-bundle.php
+├── resources/
+│   └── config/
+│       └── services.yaml
 ├── src/
 │   ├── Command/
 │   │   ├── RemoveJwtRefreshTokenExpired.php
@@ -89,6 +116,4 @@ bin/console jwt:remove-jwt-token-user
 
 ## 🤝 Contributing
 
-Sono aperto a qualsiasi confronto
-
----
+Sono aperto a qualsiasi confronto.
