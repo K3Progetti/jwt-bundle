@@ -114,6 +114,6 @@ bin/console jwt:remove-jwt-token-user
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contributi
 
 Sono aperto a qualsiasi confronto.
