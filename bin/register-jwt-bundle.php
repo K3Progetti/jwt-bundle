@@ -2,8 +2,11 @@
 <?php
 
 $bundlesFile = __DIR__ . '/../config/bundles.php';
-$bundleClass = "K3Progetti\\JwtBundle::class";
+$bundleClass = "K3Progetti\\JwtBundle\\JwtBundle::class";
 $bundleLine = "    $bundleClass => ['all' => true],";
+
+$configTarget = __DIR__ . '/../config/packages/jwt.yaml';
+$configSource = __DIR__ . '/../resources/config/jwt.yaml.dist';
 
 if (!file_exists($bundlesFile)) {
     echo "❌ File config/bundles.php non trovato.\n";
@@ -23,6 +26,12 @@ if ($remove) {
     } else {
         echo "ℹ️  JwtBundle non presente in config/bundles.php\n";
     }
+
+    // Rimuovo anche il file jwt.yaml se esiste
+    if (file_exists($configTarget)) {
+        unlink($configTarget);
+        echo "🗑️  File jwt.yaml rimosso da config/packages.\n";
+    }
 } else {
     if (strpos($contents, $bundleClass) === false) {
         $pattern = '/return\s+\[(.*?)(\];)/s';
@@ -32,5 +41,16 @@ if ($remove) {
         echo "✅ JwtBundle registrato in config/bundles.php\n";
     } else {
         echo "ℹ️  JwtBundle è già presente in config/bundles.php\n";
+    }
+
+    if (!file_exists($configTarget)) {
+        if (file_exists($configSource)) {
+            copy($configSource, $configTarget);
+            echo "✅ File jwt.yaml copiato in config/packages.\n";
+        } else {
+            echo "⚠️  File sorgente jwt.yaml.dist non trovato.\n";
+        }
+    } else {
+        echo "ℹ️  File jwt.yaml già presente in config/packages.\n";
     }
 }
