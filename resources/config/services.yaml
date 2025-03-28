@@ -9,3 +9,7 @@ services:
     autowire: true
     autoconfigure: true
     public: true
+
+  K3Progetti\JwtBundle\Service\JwtService:
+    arguments:
+      $payloadModifiers: !tagged_iterator k3progetti.jwt.payload_hook

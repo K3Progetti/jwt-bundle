@@ -2,7 +2,7 @@
 
 namespace K3Progetti\JwtBundle\Service;
 
-
+use K3Progetti\JwtBundle\JwtPayloadInterface;
 use K3Progetti\JwtBundle\Entity\JwtToken;
 use K3Progetti\JwtBundle\Repository\JwtTokenRepository;
 use App\Entity\User;
@@ -18,12 +18,16 @@ class JwtService
     private JwtTokenRepository $jwtTokenRepository;
     private int $expirationTime;
     private string $algorithm;
-    private iterable $payloadModifiers;
+    private iterable $overrideModifiers;
+    private iterable $afterModifiers;
+    private iterable $beforeModifiers;
 
     public function __construct(
         ParameterBagInterface $params,
         JwtTokenRepository    $jwtTokenRepository,
-        iterable $payloadModifiers = []
+        iterable $beforeModifiers = [],
+        iterable $afterModifiers = [],
+        iterable $overrideModifiers = []
     )
     {
 
@@ -31,7 +35,9 @@ class JwtService
         $this->secret = $params->get('jwt.secret_key');
         $this->algorithm = $params->get('jwt.algorithm');
         $this->jwtTokenRepository = $jwtTokenRepository;
-        $this->payloadModifiers = $payloadModifiers;
+        $this->overrideModifiers = $overrideModifiers;
+        $this->afterModifiers = $afterModifiers;
+        $this->beforeModifiers = $beforeModifiers;
     }
 
     /**
@@ -95,23 +101,39 @@ class JwtService
     }
 
     /**
-     * Creo il payload per il JTW
+     * Creo il payload per il JWT
      * @param User $user
      * @return array
      */
     public function getPayload(User $user): array
     {
 
+        // 1. Verifico se devo fare un ovverride
+        foreach ($this->overrideModifiers as $override) {
+            $custom = $override->override($user);
+            if ($custom !== null) {
+                return $custom;
+            }
+        }
+
         $payload = [];
+        // In caso di Before
+        foreach ($this->beforeModifiers as $before) {
+            $payload = array_merge($payload, $before->before($user));
+        }
 
-        $payload['id'] = $user->getId();
-        $payload['username'] = $user->getUsername();
-        $payload['name'] = $user->getName();
-        $payload['surname'] = $user->getSurname();
-        $payload['roles'] = $user->getRoles();
+        // Payload Base
+        $payload = array_merge($payload, [
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'name' => $user->getName(),
+            'surname' => $user->getSurname(),
+            'roles' => $user->getRoles(),
+        ]);
 
-        foreach ($this->payloadModifiers as $modifier) {
-            $payload = $modifier->modify($payload, $user);
+        // Dopo la costruzione di quello base
+        foreach ($this->afterModifiers as $after) {
+            $payload = $after->after($payload, $user);
         }
 
         return $payload;
