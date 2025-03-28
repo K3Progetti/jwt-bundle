@@ -18,10 +18,12 @@ class JwtService
     private JwtTokenRepository $jwtTokenRepository;
     private int $expirationTime;
     private string $algorithm;
+    private iterable $payloadModifiers;
 
     public function __construct(
         ParameterBagInterface $params,
-        JwtTokenRepository    $jwtTokenRepository
+        JwtTokenRepository    $jwtTokenRepository,
+        iterable $payloadModifiers = []
     )
     {
 
@@ -29,6 +31,7 @@ class JwtService
         $this->secret = $params->get('jwt.secret_key');
         $this->algorithm = $params->get('jwt.algorithm');
         $this->jwtTokenRepository = $jwtTokenRepository;
+        $this->payloadModifiers = $payloadModifiers;
     }
 
     /**
@@ -106,6 +109,10 @@ class JwtService
         $payload['name'] = $user->getName();
         $payload['surname'] = $user->getSurname();
         $payload['roles'] = $user->getRoles();
+
+        foreach ($this->payloadModifiers as $modifier) {
+            $payload = $modifier->modify($payload, $user);
+        }
 
         return $payload;
     }
