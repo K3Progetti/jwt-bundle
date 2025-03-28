@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.11](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.10...v1.1.11) (2025-03-28)
+
+
+### Bug Fixes
+
+* add "hook" per payload ([4c6891d](https://github.com/K3Progetti/jwt-bundle/commit/4c6891d65032f5f2e62fe83b69ece0c8bb28fe73))
+
 ### [1.1.10](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.9...v1.1.10) (2025-03-27)
 
 
