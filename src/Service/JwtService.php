@@ -119,7 +119,7 @@ class JwtService
         $payload = [];
         // In caso di Before
         foreach ($this->beforeModifiers as $before) {
-            $payload = array_merge($payload, $before->before($user));
+            $payload = $before->before($user);
         }
 
         // Payload Base
