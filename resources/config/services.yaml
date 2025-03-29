@@ -11,9 +11,9 @@ services:
     public: true
 
   K3Progetti\JwtBundle\Service\JwtService:
+    autowire: true
+    autoconfigure: true
     arguments:
-      $params: '@parameter_bag'
-      $jwtTokenRepository: '@App\Repository\JwtTokenRepository'
       $beforeModifiers: !tagged_iterator k3progetti.jwt.before_payload_modifier
       $afterModifiers: !tagged_iterator k3progetti.jwt.after_payload_modifier
       $overrideModifiers: !tagged_iterator k3progetti.jwt.override_payload_modifier
