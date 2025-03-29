@@ -25,9 +25,9 @@ class JwtService
     public function __construct(
         ParameterBagInterface $params,
         JwtTokenRepository    $jwtTokenRepository,
-        iterable $beforeModifiers = [],
-        iterable $afterModifiers = [],
-        iterable $overrideModifiers = []
+        iterable              $beforeModifiers = [],
+        iterable              $afterModifiers = [],
+        iterable              $overrideModifiers = []
     )
     {
 
@@ -110,16 +110,20 @@ class JwtService
 
         // 1. Verifico se devo fare un ovverride
         foreach ($this->overrideModifiers as $override) {
-            $custom = $override->override($user);
-            if ($custom !== null) {
-                return $custom;
+            if (method_exists($override, 'overridePayload')) {
+                $custom = $override->override($user);
+                if ($custom !== null) {
+                    return $custom;
+                }
             }
         }
 
         $payload = [];
         // In caso di Before
         foreach ($this->beforeModifiers as $before) {
-            $payload = $before->before($user);
+            if (method_exists($before, 'onBeforePayload')) {
+                $payload = $before->onBeforePayload($user);
+            }
         }
 
         // Payload Base
@@ -133,7 +137,9 @@ class JwtService
 
         // Dopo la costruzione di quello base
         foreach ($this->afterModifiers as $after) {
-            $payload = $after->after($payload, $user);
+            if (method_exists($after, 'onAfterPayload')) {
+                $payload = $after->onAfterPayload($payload, $user);
+            }
         }
 
         return $payload;
