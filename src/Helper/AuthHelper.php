@@ -89,6 +89,25 @@ class AuthHelper
     }
 
     /**
+     * Verifico che l'utente sia attivo.
+     *
+     * @param User $user
+     * @param int|null $companyId
+     * @return void
+     */
+    public function ensureUserRoles(User $user, ?int $companyId = null): void
+    {
+        if ($companyId !== null) {
+            // TODO ...
+
+        } else {
+            if (!$user->isActive()) {
+                throw new AuthenticationException('Account disabilitato', Response::HTTP_LOCKED);
+            }
+        }
+    }
+
+    /**
      * @param User $user
      * @param Request $request
      * @param bool|null $deleteRefreshToken
