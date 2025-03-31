@@ -63,10 +63,10 @@ class AuthHelper
      * Verifico che l'utente sia attivo.
      *
      * @param User $user
+     * @param int|null $companyId
      * @return void
-     * @throws AuthenticationException
      */
-    public function ensureUserIsActive(User $user): void
+    public function ensureUserIsActive(User $user, ?int $companyId = null): void
     {
         if (!$user->isActive()) {
             throw new AuthenticationException('Account disabilitato', Response::HTTP_LOCKED);
