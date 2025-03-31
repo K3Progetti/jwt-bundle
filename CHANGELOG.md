@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.20](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.19...v1.1.20) (2025-03-31)
+
+
+### Bug Fixes
+
+* add ensureUserRoles ([8a7fc07](https://github.com/K3Progetti/jwt-bundle/commit/8a7fc0720e038259a0837c4773ebb6016a0e89f0))
+
 ### [1.1.19](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.18...v1.1.19) (2025-03-31)
 
 
