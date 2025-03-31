@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.19](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.18...v1.1.19) (2025-03-31)
+
+
+### Bug Fixes
+
+* add company for multiAccount ([c01eabd](https://github.com/K3Progetti/jwt-bundle/commit/c01eabd0f0e5e4b1c08906ee5388a3198a83ace0))
+
 ### [1.1.18](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.17...v1.1.18) (2025-03-29)
 
 
