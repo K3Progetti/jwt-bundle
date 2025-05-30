@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.21](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.20...v1.1.21) (2025-05-30)
+
+
+### Features
+
+* aggiunto timezone ([fb6d0a8](https://github.com/K3Progetti/jwt-bundle/commit/fb6d0a8b7e91b9541f65bb65c2cc024f5f41fe82))
+
 ### [1.1.20](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.19...v1.1.20) (2025-03-31)
 
 
