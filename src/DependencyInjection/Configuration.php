@@ -17,6 +17,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('algorithm')->defaultValue('HS256')->end()
             ->integerNode('token_ttl')->defaultValue(3600)->end()
             ->integerNode('refresh_token_ttl')->defaultValue(604800)->end()
+            ->integerNode('time_zone')->defaultValue('Europe/Rome')->end()
             ->end();
 
         return $treeBuilder;

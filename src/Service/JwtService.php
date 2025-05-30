@@ -2,7 +2,6 @@
 
 namespace K3Progetti\JwtBundle\Service;
 
-use K3Progetti\JwtBundle\JwtPayloadInterface;
 use K3Progetti\JwtBundle\Entity\JwtToken;
 use K3Progetti\JwtBundle\Repository\JwtTokenRepository;
 use App\Entity\User;
@@ -21,6 +20,7 @@ class JwtService
     private iterable $overrideModifiers;
     private iterable $afterModifiers;
     private iterable $beforeModifiers;
+    private string $timeZone;
 
     public function __construct(
         ParameterBagInterface $params,
@@ -34,6 +34,7 @@ class JwtService
         $this->expirationTime = $params->get('jwt.token_ttl');
         $this->secret = $params->get('jwt.secret_key');
         $this->algorithm = $params->get('jwt.algorithm');
+        $this->timeZone = $params->get('jwt.time_zone');
         $this->jwtTokenRepository = $jwtTokenRepository;
         $this->overrideModifiers = $overrideModifiers;
         $this->afterModifiers = $afterModifiers;
@@ -50,7 +51,9 @@ class JwtService
      */
     public function createToken(array $payload, ?string $userAgent = null, ?string $ipAddress = null, ?string $externalToken = null): string
     {
-        $expiredAt = Carbon::now()->addSeconds($this->expirationTime); // Imposta la scadenza
+        $expiredAt = Carbon::now($this->timeZone)
+            ->setTimezone($this->timeZone)
+            ->addSeconds($this->expirationTime); // Imposta la scadenza
         $payload['expiredAt'] = $expiredAt->timestamp;
 
 

@@ -2,6 +2,7 @@
 
 namespace K3Progetti\JwtBundle\DependencyInjection;
 
+use Exception;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,6 +14,7 @@ class JwtExtension extends Extension
      * @param array $configs
      * @param ContainerBuilder $container
      * @return void
+     * @throws Exception
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -23,6 +25,7 @@ class JwtExtension extends Extension
         $container->setParameter('jwt.algorithm', $config['algorithm']);
         $container->setParameter('jwt.token_ttl', $config['token_ttl']);
         $container->setParameter('jwt.refresh_token_ttl', $config['refresh_token_ttl']);
+        $container->setParameter('jwt.time_zone', $config['time_zone']);
 
         // Carico il services
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../resources/config'));

@@ -4,3 +4,4 @@ jwt:
   token_ttl: 3600  # Scadenza del token in secondi (1 ora)  # Default 3600
   refresh_token_ttl: 2592000  # Scadenza del token di refresh in secondi  # Default 7 giorni (in secondi) # Attuale: 30 giorni
   algorithm: 'HS256' # Default HS256
+  time_zone: 'Europe/Tome' # Default Europe/Rome
