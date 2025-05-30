@@ -22,6 +22,10 @@ Bundle Symfony per la gestione avanzata dei token JWT, con supporto a:
 composer require k3progetti/jwt-bundle
 ```
 
+```bash
+php composer.phar install --ignore-platform-req=ext-redis
+```
+
 ---
 
 ## ⚙️ Configurazione
