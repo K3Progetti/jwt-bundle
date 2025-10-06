@@ -6,9 +6,14 @@ services:
       - '../../src/Entity/'
       - '../../src/Tests/'
       - '../../src/Event/'
+      - '../../src/EventListener/'
     autowire: true
     autoconfigure: true
     public: true
+
+  K3Progetti\JwtBundle\EventListener\ExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception }
 
   K3Progetti\JwtBundle\Service\JwtService:
     autowire: true
