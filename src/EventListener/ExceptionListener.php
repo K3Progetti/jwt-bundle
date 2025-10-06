@@ -6,6 +6,7 @@ use App\Utils\Result;
 use K3Progetti\JwtBundle\Exception\JwtAuthorizationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExceptionListener
 {
@@ -17,7 +18,10 @@ class ExceptionListener
             $result = new Result();
             $result->setMessage($exception->getMessage());
 
-            $response = new JsonResponse($result, 422);
+            // Se non è impostato un codice valido, fallback a 401
+            $statusCode = $exception->getCode() ?: Response::HTTP_UNAUTHORIZED;
+
+            $response = new JsonResponse($result,  $statusCode);
 
             $event->setResponse($response);
         }
