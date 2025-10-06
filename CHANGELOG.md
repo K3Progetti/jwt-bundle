@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/K3Progetti/jwt-bundle/compare/v2.0.0...v2.0.1) (2025-10-06)
+
+
+### Features
+
+* gestione eccezione libreria ([8f1e0e9](https://github.com/K3Progetti/jwt-bundle/commit/8f1e0e9573e5856b6f8d5925aa46c7bb9c6bdf0d))
+
 ## [2.0.0](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.21...v2.0.0) (2025-10-06)
 
 ### [1.1.21](https://github.com/K3Progetti/jwt-bundle/compare/v1.1.20...v1.1.21) (2025-05-30)
