@@ -2,6 +2,7 @@
 
 namespace K3Progetti\JwtBundle\Security;
 
+use K3Progetti\JwtBundle\Exception\JwtAuthorizationException;
 use K3Progetti\JwtBundle\Helper\AuthHelper;
 use K3Progetti\JwtBundle\Repository\JwtTokenRepository;
 use K3Progetti\JwtBundle\Service\JwtService;
@@ -56,20 +57,20 @@ class JwtAuthenticator extends AbstractAuthenticator
         $authHeader = $request->headers->get('Authorization');
 
         if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
-            throw new AuthenticationException('Token non presente', Response::HTTP_BAD_REQUEST);
+            throw new JwtAuthorizationException('Token non presente', Response::HTTP_BAD_REQUEST);
         }
 
         $jwt = substr($authHeader, 7);
         $decodedToken = $this->jwtService->decodeToken($jwt);
 
         if (!$decodedToken) {
-            throw new AuthenticationException('Token non valido', Response::HTTP_UNAUTHORIZED);
+            throw new JwtAuthorizationException('Token non valido', Response::HTTP_UNAUTHORIZED);
         }
 
         $jwtToken = $this->jwtTokenRepository->findOneBy(['token' => $jwt]);
 
         if ($jwtToken === null) {
-            throw new AuthenticationException('Token non trovato', Response::HTTP_FORBIDDEN);
+            throw new JwtAuthorizationException('Token non trovato', Response::HTTP_FORBIDDEN);
         }
 
         $expiredAt = $jwtToken->getExpiredAt();
@@ -78,7 +79,7 @@ class JwtAuthenticator extends AbstractAuthenticator
         if (Carbon::now()->greaterThan($expiredAt)) {
             // Elimino il token scaduto
             $this->jwtService->removeToken($jwt);
-            throw new AuthenticationException('Token scaduto', Response::HTTP_UNAUTHORIZED);
+            throw new JwtAuthorizationException('Token scaduto', Response::HTTP_UNAUTHORIZED);
         }
 
         // Trovo l'utente nel database
