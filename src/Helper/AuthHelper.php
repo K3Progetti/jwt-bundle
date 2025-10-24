@@ -7,6 +7,7 @@ use K3Progetti\JwtBundle\Exception\JwtAuthorizationException;
 use K3Progetti\JwtBundle\Service\JwtRefreshService;
 use K3Progetti\JwtBundle\Service\JwtService;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Random\RandomException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
