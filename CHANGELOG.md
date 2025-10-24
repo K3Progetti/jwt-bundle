@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/K3Progetti/jwt-bundle/compare/v2.0.3...v2.1.0) (2025-10-24)
+
+
+### Features
+
+* aggiunta 2fa ([796ade8](https://github.com/K3Progetti/jwt-bundle/commit/796ade803cf0f8df80ae7875e24b370f8d264724))
+
 ### [2.0.3](https://github.com/K3Progetti/jwt-bundle/compare/v2.0.2...v2.0.3) (2025-10-06)
 
 
