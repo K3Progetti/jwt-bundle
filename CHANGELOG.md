@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.4](https://github.com/K3Progetti/jwt-bundle/compare/v2.1.3...v2.1.4) (2025-10-24)
+
+
+### Bug Fixes
+
+* import library postmark ([343f8b9](https://github.com/K3Progetti/jwt-bundle/commit/343f8b9e7a20d074588aaf53e989f91086dfaff0))
+
 ### [2.1.3](https://github.com/K3Progetti/jwt-bundle/compare/v2.1.2...v2.1.3) (2025-10-24)
 
 
