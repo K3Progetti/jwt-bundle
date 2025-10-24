@@ -22,7 +22,8 @@ class AuthHelper
         private readonly UserPasswordHasherInterface $passwordEncoder,
         private readonly JwtService                  $jwtService,
         private readonly JwtRefreshService           $jwtRefreshService,
-        private readonly ParameterBagInterface       $parameterBag
+        private readonly ParameterBagInterface       $parameterBag,
+        private readonly UserRepository              $userRepository
     )
     {
     }
@@ -32,7 +33,8 @@ class AuthHelper
      * @param User|null $user
      * @return JsonResponse|null
      */
-    public function validateUser(?User $user = null): ?JsonResponse
+    public
+    function validateUser(?User $user = null): ?JsonResponse
     {
         if (!$user) {
             throw new JwtAuthorizationException('Credenziali non valide', Response::HTTP_UNAUTHORIZED);
@@ -50,7 +52,8 @@ class AuthHelper
      * @return void
      * @throws JwtAuthorizationException
      */
-    public function ensureUserExists(?User $user): void
+    public
+    function ensureUserExists(?User $user): void
     {
         if (!$user) {
             throw new JwtAuthorizationException('Utente non trovato', Response::HTTP_UNAUTHORIZED);
@@ -64,7 +67,8 @@ class AuthHelper
      * @param int|null $companyId
      * @return void
      */
-    public function ensureUserIsActive(User $user, ?int $companyId = null): void
+    public
+    function ensureUserIsActive(User $user, ?int $companyId = null): void
     {
         if (!$user->isActive()) {
             throw new JwtAuthorizationException('Account disabilitato', Response::HTTP_LOCKED);
@@ -77,7 +81,8 @@ class AuthHelper
      * @param string $password
      * @return JsonResponse|null
      */
-    public function validatePassword(User $user, string $password): ?JsonResponse
+    public
+    function validatePassword(User $user, string $password): ?JsonResponse
     {
         if (!$this->passwordEncoder->isPasswordValid($user, $password)) {
             throw new JwtAuthorizationException('Password non valida', Response::HTTP_UNAUTHORIZED);
@@ -93,7 +98,8 @@ class AuthHelper
      * @param string|null $code2fa
      * @return void
      */
-    public function validate2fa(User $user, ?string $code2fa = null): void
+    public
+    function validate2fa(User $user, ?string $code2fa = null): void
     {
         if ($code2fa !== $user->getTwoFactorAuthCode()) {
             throw new JwtAuthorizationException('Codice non valido', Response::HTTP_LOCKED);
@@ -108,7 +114,8 @@ class AuthHelper
      * @return void
      * @throws RandomException
      */
-    public function build2faCode(User $user): void
+    public
+    function build2faCode(User $user): void
     {
         // Genero il codice
         $code = $this->generateNumeric2FA();
@@ -131,7 +138,8 @@ class AuthHelper
      * @param int|null $companyId
      * @return void
      */
-    public function ensureUserRoles(User $user, ?int $companyId = null): void
+    public
+    function ensureUserRoles(User $user, ?int $companyId = null): void
     {
         if ($companyId !== null) {
             // TODO ...
@@ -151,7 +159,8 @@ class AuthHelper
      * @return array
      * @throws RandomException
      */
-    public function buildTokenResponse(
+    public
+    function buildTokenResponse(
         User    $user,
         Request $request,
         ?bool   $deleteRefreshToken = false,
@@ -187,7 +196,8 @@ class AuthHelper
      * @return string
      * @throws RandomException
      */
-    private function generateNumeric2FA(int $digits = 6): string
+    private
+    function generateNumeric2FA(int $digits = 6): string
     {
         $min = (int)pow(10, $digits - 1);
         $max = (int)pow(10, $digits) - 1;
