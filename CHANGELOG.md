@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/K3Progetti/jwt-bundle/compare/v2.1.0...v2.1.1) (2025-10-24)
+
+
+### Bug Fixes
+
+* libreria ([81ac465](https://github.com/K3Progetti/jwt-bundle/commit/81ac4659d245fdcc1ae1cd7a28a427452ff9d29d))
+
 ## [2.1.0](https://github.com/K3Progetti/jwt-bundle/compare/v2.0.3...v2.1.0) (2025-10-24)
 
 
