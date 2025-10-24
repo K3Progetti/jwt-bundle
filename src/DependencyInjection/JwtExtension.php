@@ -26,6 +26,7 @@ class JwtExtension extends Extension
         $container->setParameter('jwt.token_ttl', $config['token_ttl']);
         $container->setParameter('jwt.refresh_token_ttl', $config['refresh_token_ttl']);
         $container->setParameter('jwt.time_zone', $config['time_zone']);
+        $container->setParameter('jwt.2fa_expired_code', $config['2fa_expired_code']);
 
         // Carico il services
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../resources/config'));

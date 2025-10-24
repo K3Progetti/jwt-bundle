@@ -5,3 +5,4 @@ jwt:
   refresh_token_ttl: 2592000  # Scadenza del token di refresh in secondi  # Default 7 giorni (in secondi) # Attuale: 30 giorni
   algorithm: 'HS256' # Default HS256
   time_zone: 'Europe/Tome' # Default Europe/Rome
+  2fa_expired_code: 10 # Valida codice 2fa espresso in minuti

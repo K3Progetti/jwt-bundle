@@ -2,11 +2,13 @@
 
 namespace K3Progetti\JwtBundle\Helper;
 
+use Carbon\Carbon;
 use K3Progetti\JwtBundle\Exception\JwtAuthorizationException;
 use K3Progetti\JwtBundle\Service\JwtRefreshService;
 use K3Progetti\JwtBundle\Service\JwtService;
 use App\Entity\User;
 use Random\RandomException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,19 +16,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AuthHelper
 {
-    private UserPasswordHasherInterface $passwordEncoder;
-    private JwtService $jwtService;
-    private JwtRefreshService $jwtRefreshService;
 
     public function __construct(
-        UserPasswordHasherInterface $passwordEncoder,
-        JwtService                  $jwtService,
-        JwtRefreshService           $jwtRefreshService
+        private readonly UserPasswordHasherInterface $passwordEncoder,
+        private readonly JwtService                  $jwtService,
+        private readonly JwtRefreshService           $jwtRefreshService,
+        private readonly ParameterBagInterface       $parameterBag
     )
     {
-        $this->passwordEncoder = $passwordEncoder;
-        $this->jwtService = $jwtService;
-        $this->jwtRefreshService = $jwtRefreshService;
     }
 
     /**
@@ -89,6 +86,44 @@ class AuthHelper
     }
 
     /**
+     * Verifico che il codice utente è valido
+     *
+     * @param User $user
+     * @param string|null $code2fa
+     * @return void
+     */
+    public function validate2fa(User $user, ?string $code2fa = null): void
+    {
+        if ($code2fa !== $user->getTwoFactorAuthCode()) {
+            throw new JwtAuthorizationException('Codice non valido', Response::HTTP_LOCKED);
+        }
+    }
+
+
+    /**
+     * Genero il codice 2fa
+     *
+     * @param User $user
+     * @return void
+     * @throws RandomException
+     */
+    public function build2faCode(User $user): void
+    {
+        // Genero il codice
+        $code = $this->generateNumeric2FA();
+        $codeExpired = Carbon::now()->addMinutes($this->parameterBag->get('jwt.2fa_expired_code'));
+
+        $user->setTwoFactorAuthCode($code);
+        $user->setTwoFactorAuthCodeExpired($codeExpired);
+
+        $this->userRepository->save($user);
+
+        // Invio L'email
+        $this->postmarkService->sendTwoFactorCode($user, $code);
+    }
+
+
+    /**
      * Verifico che l'utente sia attivo.
      *
      * @param User $user
@@ -144,5 +179,17 @@ class AuthHelper
             'token' => $accessToken,
             'refresh_token' => $refreshToken,
         ];
+    }
+
+    /**
+     * @param int $digits
+     * @return string
+     * @throws RandomException
+     */
+    private function generateNumeric2FA(int $digits = 6): string
+    {
+        $min = (int)pow(10, $digits - 1);
+        $max = (int)pow(10, $digits) - 1;
+        return (string)random_int($min, $max);
     }
 }

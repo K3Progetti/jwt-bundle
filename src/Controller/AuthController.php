@@ -37,6 +37,20 @@ class AuthController extends AbstractController
 
     /**
      * @param Request $request
+     * @param LoginHandler $handler
+     * @return JsonResponse
+     * @throws JsonException
+     * @throws RandomException
+     */
+    #[Route('/login_check_2fa', name: 'login_2fa', methods: ['POST'])]
+    public function login2FA(Request $request, LoginHandler $handler): JsonResponse
+    {
+        return $handler->handle($request, true);
+    }
+
+
+    /**
+     * @param Request $request
      * @param RefreshTokenHandler $handler
      * @return JsonResponse
      * @throws JsonException
