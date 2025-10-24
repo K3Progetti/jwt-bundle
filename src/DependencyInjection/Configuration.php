@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
             ->integerNode('token_ttl')->defaultValue(3600)->end()
             ->integerNode('refresh_token_ttl')->defaultValue(604800)->end()
             ->integerNode('time_zone')->defaultValue('Europe/Rome')->end()
-            ->integerNode('2fa_expired_code')->defaultValue('10')->end()
+            ->integerNode('2fa_expired_code')->defaultValue(10)->end()
             ->end();
 
         return $treeBuilder;
