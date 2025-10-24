@@ -8,6 +8,7 @@ use K3Progetti\JwtBundle\Service\JwtRefreshService;
 use K3Progetti\JwtBundle\Service\JwtService;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\External\PostmarkService;
 use Random\RandomException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +24,8 @@ class AuthHelper
         private readonly JwtService                  $jwtService,
         private readonly JwtRefreshService           $jwtRefreshService,
         private readonly ParameterBagInterface       $parameterBag,
-        private readonly UserRepository              $userRepository
+        private readonly UserRepository              $userRepository,
+        private readonly PostmarkService             $postmarkService
     )
     {
     }
