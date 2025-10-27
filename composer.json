@@ -21,7 +21,8 @@
     "symfony/redis-messenger": "~7.0",
     "symfony/validator": "~7.0",
     "symfony/security-bundle": "*",
-    "symfony/serializer": "*"
+    "symfony/serializer": "*",
+    "k3progetti/mercure-bridge-bundle": "*"
   },
   "autoload": {
     "psr-4": {

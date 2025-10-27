@@ -86,10 +86,7 @@ class RemoveJwtTokenUser extends Command
         }
 
         // Invio un messaggio per comunicare che è stato disattivato
-        if ($user && $this->params->get('mercureEnabled')) {
-            $this->eventDispatcher->dispatch(new JwtUserLoggedOutEvent($user->getId(), $user->getUsername()));
-        }
-
+        $this->eventDispatcher->dispatch(new JwtUserLoggedOutEvent($user->getId(), $user->getUsername()));
 
         return Command::SUCCESS;
     }
