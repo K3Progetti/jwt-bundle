@@ -83,7 +83,7 @@ class RemoveJwtTokenUser extends Command
             'logout',
             ['id' => $userId],
             [
-                'entity' => 'jwt',
+                'entity' => 'security',
             ]);
 
         $this->sendNotification->send($data);
