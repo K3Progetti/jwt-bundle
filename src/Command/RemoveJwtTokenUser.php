@@ -2,10 +2,12 @@
 
 namespace K3Progetti\JwtBundle\Command;
 
-use K3Progetti\JwtBundle\Event\JwtUserLoggedOutEvent;
 use K3Progetti\JwtBundle\Repository\JwtRefreshTokenRepository;
 use K3Progetti\JwtBundle\Repository\JwtTokenRepository;
 use App\Repository\UserRepository;
+use K3Progetti\MercureBridgeBundle\Enum\NotificationType;
+use K3Progetti\MercureBridgeBundle\Service\NotificationMessageFactory;
+use K3Progetti\MercureBridgeBundle\Service\SendNotification;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,27 +21,17 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class RemoveJwtTokenUser extends Command
 {
 
-    private JwtTokenRepository $jwtTokenRepository;
-    private UserRepository $userRepository;
-    private JwtRefreshTokenRepository $jwtRefreshTokenRepository;
-    private ParameterBagInterface $params;
-    private EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
-        JwtTokenRepository        $jwtTokenRepository,
-        UserRepository            $userRepository,
-        JwtRefreshTokenRepository $jwtRefreshTokenRepository,
-        ParameterBagInterface     $params,
-        EventDispatcherInterface  $eventDispatcher
+        private readonly JwtTokenRepository        $jwtTokenRepository,
+        private readonly UserRepository            $userRepository,
+        private readonly JwtRefreshTokenRepository $jwtRefreshTokenRepository,
+        private readonly ParameterBagInterface     $params,
+        private readonly EventDispatcherInterface  $eventDispatcher,
+        private readonly SendNotification          $sendNotification
 
     )
     {
         parent::__construct();
-        $this->jwtTokenRepository = $jwtTokenRepository;
-        $this->userRepository = $userRepository;
-        $this->jwtRefreshTokenRepository = $jwtRefreshTokenRepository;
-        $this->params = $params;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -86,7 +78,15 @@ class RemoveJwtTokenUser extends Command
         }
 
         // Invio un messaggio per comunicare che è stato disattivato
-        $this->eventDispatcher->dispatch(new JwtUserLoggedOutEvent($user->getId(), $user->getUsername()));
+        $data = NotificationMessageFactory::create(
+            NotificationType::StatusUpdate,
+            'logout',
+            ['id' => $userId],
+            [
+                'entity' => 'jwt',
+            ]);
+
+        $this->sendNotification->send($data);
 
         return Command::SUCCESS;
     }
