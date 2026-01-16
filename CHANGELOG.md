@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/K3Progetti/jwt-bundle/compare/v2.2.2...v3.0.0) (2026-01-16)
+
+
+### Features
+
+* aggiornamento a symfony 8 ([1893ce6](https://github.com/K3Progetti/jwt-bundle/commit/1893ce67c8134c7e4d845ed336cbfcd0944946d6))
+
 ### [2.2.2](https://github.com/K3Progetti/jwt-bundle/compare/v2.2.1...v2.2.2) (2025-10-27)
 
 
