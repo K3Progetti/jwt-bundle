@@ -10,16 +10,16 @@
     }
   ],
   "require": {
-    "php": ">=8.2",
+    "php": ">=8.4",
     "firebase/php-jwt": "^6.11",
     "nesbot/carbon": "~3.0",
     "doctrine/orm": "^2.15",
     "doctrine/doctrine-bundle": "^2.10",
-    "symfony/framework-bundle": "^7.0",
-    "symfony/http-client": "~7.0",
-    "symfony/messenger": "~7.0",
-    "symfony/redis-messenger": "~7.0",
-    "symfony/validator": "~7.0",
+    "symfony/framework-bundle": "^8.0",
+    "symfony/http-client": "~8.0",
+    "symfony/messenger": "~8.0",
+    "symfony/redis-messenger": "~8.0",
+    "symfony/validator": "~8.0",
     "symfony/security-bundle": "*",
     "symfony/serializer": "*",
     "k3progetti/mercure-bridge-bundle": "*"
