@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/K3Progetti/jwt-bundle/compare/v3.0.0...v3.0.1) (2026-01-16)
+
+
+### Features
+
+* aggiornato libreria orm ([74bc2ee](https://github.com/K3Progetti/jwt-bundle/commit/74bc2ee7e3fdd13719d0048105deaa385d9bfd83))
+
 ## [3.0.0](https://github.com/K3Progetti/jwt-bundle/compare/v2.2.2...v3.0.0) (2026-01-16)
 
 
