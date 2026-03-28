@@ -4,7 +4,7 @@ namespace K3Progetti\JwtBundle\Service;
 
 use K3Progetti\JwtBundle\Entity\JwtRefreshToken;
 use K3Progetti\JwtBundle\Repository\JwtRefreshTokenRepository;
-use App\Entity\User;
+use K3Progetti\JwtBundle\Security\JwtUserInterface;
 use Carbon\Carbon;
 use Random\RandomException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -26,13 +26,13 @@ class JwtRefreshService
     }
 
     /**
-     * @param User $user
+     * @param JwtUserInterface $user
      * @param string|null $userAgent
      * @param string|null $ipAddress
      * @return string
      * @throws RandomException
      */
-    public function createRefreshToken(User $user, ?string $userAgent = null, ?string $ipAddress = null): string
+    public function createRefreshToken(JwtUserInterface $user, ?string $userAgent = null, ?string $ipAddress = null): string
     {
         $refreshToken = bin2hex(random_bytes(64));
 

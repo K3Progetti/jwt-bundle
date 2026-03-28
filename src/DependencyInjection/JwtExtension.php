@@ -3,13 +3,35 @@
 namespace K3Progetti\JwtBundle\DependencyInjection;
 
 use Exception;
+use K3Progetti\JwtBundle\Mailer\TwoFactorMailerInterface;
+use K3Progetti\JwtBundle\Repository\JwtUserRepositoryInterface;
+use K3Progetti\JwtBundle\Security\JwtUserInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
-class JwtExtension extends Extension
+class JwtExtension extends Extension implements PrependExtensionInterface
 {
+    /**
+     * @param ContainerBuilder $container
+     * @return void
+     */
+    public function prepend(ContainerBuilder $container): void
+    {
+        $configs = $container->getExtensionConfig($this->getAlias());
+        $config = $this->processConfiguration(new Configuration(), $configs);
+
+        $container->prependExtensionConfig('doctrine', [
+            'orm' => [
+                'resolve_target_entities' => [
+                    JwtUserInterface::class => $config['user_class'],
+                ],
+            ],
+        ]);
+    }
+
     /**
      * @param array $configs
      * @param ContainerBuilder $container
@@ -31,6 +53,16 @@ class JwtExtension extends Extension
         // Carico il services
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../resources/config'));
         $loader->load('services.yaml');
+
+        // Alias: JwtUserRepositoryInterface deve puntare al repository concreto dell'app
+        $container->setAlias(JwtUserRepositoryInterface::class, $config['user_repository_class'])
+            ->setPublic(true);
+
+        // Alias opzionale: TwoFactorMailerInterface deve puntare al mailer concreto (solo se 2FA è configurato)
+        if ($config['mailer_class']) {
+            $container->setAlias(TwoFactorMailerInterface::class, $config['mailer_class'])
+                ->setPublic(true);
+        }
     }
 
     /**

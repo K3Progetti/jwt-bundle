@@ -6,7 +6,7 @@ use K3Progetti\JwtBundle\Exception\JwtAuthorizationException;
 use K3Progetti\JwtBundle\Helper\AuthHelper;
 use K3Progetti\JwtBundle\Repository\JwtTokenRepository;
 use K3Progetti\JwtBundle\Service\JwtService;
-use App\Repository\UserRepository;
+use K3Progetti\JwtBundle\Repository\JwtUserRepositoryInterface;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,15 +20,15 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 class JwtAuthenticator extends AbstractAuthenticator
 {
     private JwtService $jwtService;
-    private UserRepository $userRepository;
+    private JwtUserRepositoryInterface $userRepository;
     private JwtTokenRepository $jwtTokenRepository;
     private AuthHelper $authHelper;
 
     public function __construct(
-        JwtService         $jwtService,
-        UserRepository     $userRepository,
-        JwtTokenRepository $jwtTokenRepository,
-        AuthHelper         $authHelper
+        JwtService                 $jwtService,
+        JwtUserRepositoryInterface $userRepository,
+        JwtTokenRepository         $jwtTokenRepository,
+        AuthHelper                 $authHelper
     )
     {
         $this->jwtService = $jwtService;

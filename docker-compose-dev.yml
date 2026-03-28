@@ -1,0 +1,29 @@
+services:
+  webapp:
+    image: k3progetti/nginx
+    networks:
+      - default
+      - reverseproxy
+    volumes_from:
+      - phpfpm
+    environment:
+      CLIENT_MAX_BODY_SIZE: 64M
+  phpfpm:
+    image: k3progetti/phpfpm:8.4-postgres
+    volumes:
+      - ./:/app:rw,cached
+      - ./var/cache:/app/var/cache:delegated
+      - ~/.ssh:/root/.ssh
+      - ./supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+    environment:
+      MAX_UPLOAD_SIZE: 12M
+      POST_MAX_SIZE: 12M
+#      # Debug
+      DOCKER_HOST_IP: 192.168.1.126 # CASA
+#      DOCKER_HOST_IP: 10.101.15.80 # Telefono
+      DOCKER_HOST_PORT: 9000 #development purpose
+      ENABLE_XDEBUG: 'no' #development purpose
+
+networks:
+  reverseproxy:
+    external: true

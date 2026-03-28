@@ -3,7 +3,7 @@
 namespace K3Progetti\JwtBundle\Entity;
 
 use K3Progetti\JwtBundle\Repository\JwtRefreshTokenRepository;
-use App\Entity\User;
+use K3Progetti\JwtBundle\Security\JwtUserInterface;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,9 +17,9 @@ class JwtRefreshToken
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'jwtRefreshTokens')]
+    #[ORM\ManyToOne(targetEntity: JwtUserInterface::class, inversedBy: 'jwtRefreshTokens')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    private User $appUser;
+    private JwtUserInterface $appUser;
 
     #[ORM\Column(type: 'string', unique: true)]
     #[Assert\NotBlank]
@@ -88,12 +88,12 @@ class JwtRefreshToken
         return $this;
     }
 
-    public function getAppUser(): User
+    public function getAppUser(): JwtUserInterface
     {
         return $this->appUser;
     }
 
-    public function setAppUser(User $appUser): static
+    public function setAppUser(JwtUserInterface $appUser): static
     {
         $this->appUser = $appUser;
 

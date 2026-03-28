@@ -3,7 +3,7 @@
 namespace K3Progetti\JwtBundle\Security\Handler;
 
 use K3Progetti\JwtBundle\Helper\AuthHelper;
-use App\Repository\UserRepository;
+use K3Progetti\JwtBundle\Repository\JwtUserRepositoryInterface;
 use JsonException;
 use Random\RandomException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class LoginHandler
 {
-    private UserRepository $userRepository;
+    private JwtUserRepositoryInterface $userRepository;
     private AuthHelper $authHelper;
 
     public function __construct(
-        UserRepository    $userRepository,
-        AuthHelper $authHelper
+        JwtUserRepositoryInterface $userRepository,
+        AuthHelper                 $authHelper
     )
     {
         $this->userRepository = $userRepository;

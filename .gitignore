@@ -1,4 +1,21 @@
-.idea
-vendor
+# IDE
+.idea/
+
+# Dipendenze
+/vendor/
 /composer.lock
 /composer.phar
+
+# Symfony
+/var/
+
+# Ambiente
+.env.local
+.env.*.local
+
+# Test
+.phpunit.result.cache
+/phpunit.xml
+
+# OS
+.DS_Store

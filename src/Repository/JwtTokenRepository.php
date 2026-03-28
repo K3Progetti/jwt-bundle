@@ -3,9 +3,9 @@
 namespace K3Progetti\JwtBundle\Repository;
 
 use K3Progetti\JwtBundle\Entity\JwtToken;
-use App\Repository\Repository;
 use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
+use K3Progetti\Repository\Repository;
 
 /**
  * @method JwtToken|null find($id, $lockMode = null, $lockVersion = null)
