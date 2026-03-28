@@ -3,9 +3,9 @@
 namespace K3Progetti\JwtBundle\Repository;
 
 use K3Progetti\JwtBundle\Entity\JwtRefreshToken;
-use App\Repository\Repository;
 use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
+use K3Progetti\Repository\Repository;
 
 /**
  * @extends Repository<JwtRefreshToken>
@@ -18,7 +18,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class JwtRefreshTokenRepository extends Repository
 {
-
 
     public function __construct(
         ManagerRegistry $registry,

@@ -69,7 +69,7 @@ class AuthController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/api/logout', name: 'logout', methods: 'GET')]
-    public function getUsers(Request $request, LogoutHandler $handler): JsonResponse
+    public function logout(Request $request, LogoutHandler $handler): JsonResponse
     {
 
         return $handler->handle($request);

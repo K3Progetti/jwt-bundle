@@ -13,16 +13,17 @@
     "php": ">=8.2",
     "firebase/php-jwt": "^7.0.3",
     "nesbot/carbon": "~3.0",
-    "doctrine/orm": "^2.15",
-    "doctrine/doctrine-bundle": "^2.10",
-    "symfony/framework-bundle": "^7.0",
-    "symfony/http-client": "~7.0",
-    "symfony/messenger": "~7.0",
-    "symfony/redis-messenger": "~7.0",
-    "symfony/validator": "~7.0",
-    "symfony/security-bundle": "*",
-    "symfony/serializer": "*",
-    "k3progetti/mercure-bridge-bundle": "*"
+    "doctrine/orm": "^3.6.2",
+    "doctrine/doctrine-bundle": "^3.2.2",
+    "symfony/framework-bundle": "~8.0",
+    "symfony/http-client": "~8.0",
+    "symfony/messenger": "~8.0",
+    "symfony/redis-messenger": "~8.0",
+    "symfony/validator": "~8.0",
+    "symfony/security-bundle": "~8.0",
+    "symfony/serializer": "~8.0",
+    "k3progetti/mercure-bridge-bundle": "*",
+    "k3progetti/doctrine-repository": "^1.0"
   },
   "autoload": {
     "psr-4": {
@@ -33,17 +34,6 @@
     "branch-alias": {
       "dev-main": "1.0-dev"
     }
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "@php bin/register-jwt-bundle.php"
-    ],
-    "post-update-cmd": [
-      "@php bin/register-jwt-bundle.php"
-    ],
-    "pre-package-uninstall": [
-      "@php bin/register-jwt-bundle.php --remove"
-    ]
   },
   "minimum-stability": "dev",
   "prefer-stable": true

@@ -4,7 +4,7 @@ namespace K3Progetti\JwtBundle\Service;
 
 use K3Progetti\JwtBundle\Entity\JwtToken;
 use K3Progetti\JwtBundle\Repository\JwtTokenRepository;
-use App\Entity\User;
+use K3Progetti\JwtBundle\Security\JwtUserInterface;
 use Carbon\Carbon;
 use Exception;
 use Firebase\JWT\JWT;
@@ -57,22 +57,22 @@ class JwtService
         $payload['expiredAt'] = $expiredAt->timestamp;
 
 
-        $jtw = JWT::encode($payload, $this->secret, $this->algorithm);
+        $jwt = JWT::encode($payload, $this->secret, $this->algorithm);
         if (!empty($externalToken)) {
-            $jtw = $externalToken;
+            $jwt = $externalToken;
         }
 
-        $jtwToken = new JwtToken();
-        $jtwToken->setToken($jtw);
-        $jtwToken->setUsername($payload['username']);
-        $jtwToken->setCreatedAt(Carbon::now()->toDateTimeImmutable());
-        $jtwToken->setExpiredAt($expiredAt->toDateTimeImmutable());
-        $jtwToken->setDevice($userAgent);
-        $jtwToken->setIpAddress($ipAddress);
+        $jwtToken = new JwtToken();
+        $jwtToken->setToken($jwt);
+        $jwtToken->setUsername($payload['username']);
+        $jwtToken->setCreatedAt(Carbon::now()->toDateTimeImmutable());
+        $jwtToken->setExpiredAt($expiredAt->toDateTimeImmutable());
+        $jwtToken->setDevice($userAgent);
+        $jwtToken->setIpAddress($ipAddress);
 
-        $this->jwtTokenRepository->save($jtwToken);
+        $this->jwtTokenRepository->save($jwtToken);
 
-        return $jtw;
+        return $jwt;
     }
 
     /**
@@ -83,9 +83,9 @@ class JwtService
     public function removeToken(string $token): void
     {
 
-        $jtwToken = $this->jwtTokenRepository->findOneBy(['token' => $token]);
-        if ($jtwToken) {
-            $this->jwtTokenRepository->remove($jtwToken);
+        $jwtToken = $this->jwtTokenRepository->findOneBy(['token' => $token]);
+        if ($jwtToken) {
+            $this->jwtTokenRepository->remove($jwtToken);
         }
 
     }
@@ -105,16 +105,16 @@ class JwtService
 
     /**
      * Creo il payload per il JWT
-     * @param User $user
+     * @param JwtUserInterface $user
      * @return array
      */
-    public function getPayload(User $user): array
+    public function getPayload(JwtUserInterface $user): array
     {
 
         // 1. Verifico se devo fare un ovverride
         foreach ($this->overrideModifiers as $override) {
             if (method_exists($override, 'overridePayload')) {
-                $custom = $override->override($user);
+                $custom = $override->overridePayload($user);
                 if ($custom !== null) {
                     return $custom;
                 }

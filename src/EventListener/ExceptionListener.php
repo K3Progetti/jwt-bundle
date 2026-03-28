@@ -2,7 +2,7 @@
 
 namespace K3Progetti\JwtBundle\EventListener;
 
-use App\Utils\Result;
+use K3Progetti\JwtBundle\Http\Result;
 use K3Progetti\JwtBundle\Exception\JwtAuthorizationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -26,6 +26,6 @@ class ExceptionListener
             $event->setResponse($response);
         }
 
-        // puoi gestire qui anche altre eccezioni se vuoi
+        // qua posso gestire altre opzioni
     }
 }

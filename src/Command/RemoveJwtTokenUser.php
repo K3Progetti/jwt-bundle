@@ -4,7 +4,7 @@ namespace K3Progetti\JwtBundle\Command;
 
 use K3Progetti\JwtBundle\Repository\JwtRefreshTokenRepository;
 use K3Progetti\JwtBundle\Repository\JwtTokenRepository;
-use App\Repository\UserRepository;
+use K3Progetti\JwtBundle\Repository\JwtUserRepositoryInterface;
 use K3Progetti\MercureBridgeBundle\Enum\NotificationType;
 use K3Progetti\MercureBridgeBundle\Service\NotificationMessageFactory;
 use K3Progetti\MercureBridgeBundle\Service\SendNotification;
@@ -23,7 +23,7 @@ class RemoveJwtTokenUser extends Command
 
     public function __construct(
         private readonly JwtTokenRepository        $jwtTokenRepository,
-        private readonly UserRepository            $userRepository,
+        private readonly JwtUserRepositoryInterface $userRepository,
         private readonly JwtRefreshTokenRepository $jwtRefreshTokenRepository,
         private readonly ParameterBagInterface     $params,
         private readonly EventDispatcherInterface  $eventDispatcher,
