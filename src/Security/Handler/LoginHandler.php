@@ -15,8 +15,8 @@ class LoginHandler
     private AuthHelper $authHelper;
 
     public function __construct(
-        UserRepository    $userRepository,
-        AuthHelper $authHelper
+        UserRepository $userRepository,
+        AuthHelper     $authHelper
     )
     {
         $this->userRepository = $userRepository;
@@ -28,6 +28,7 @@ class LoginHandler
      *
      * @param Request $request
      * @param bool|null $twoFactorAuth
+     * @param string|null $languageCode
      * @return JsonResponse
      * @throws JsonException
      * @throws RandomException
@@ -54,6 +55,11 @@ class LoginHandler
                     'twoFactorAuth' => true
                 ]);
             }
+        }
+
+        $languageCode = $data['languageCode'] ?? null;
+        if (!empty($languageCode)) {
+            $user->authHelper->setLanguageCode($languageCode);
         }
 
         $response = $this->authHelper->buildTokenResponse($user, $request);
