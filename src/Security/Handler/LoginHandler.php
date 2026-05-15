@@ -43,6 +43,11 @@ class LoginHandler
 
         $this->authHelper->validatePassword($user, $data['password'] ?? '');
 
+        $languageCode = $data['languageCode'] ?? null;
+        if (!empty($languageCode)) {
+            $this->authHelper->setLanguageCode($user, $languageCode);
+        }
+
         // Verifico il codice
         if (!empty($data['code2fa'])) {
             $this->authHelper->validate2fa($user, $data['code2fa']);
@@ -57,10 +62,6 @@ class LoginHandler
             }
         }
 
-        $languageCode = $data['languageCode'] ?? null;
-        if (!empty($languageCode)) {
-            $user->authHelper->setLanguageCode($languageCode);
-        }
 
         $response = $this->authHelper->buildTokenResponse($user, $request);
 

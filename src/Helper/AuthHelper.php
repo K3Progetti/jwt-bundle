@@ -134,10 +134,7 @@ class AuthHelper
      */
     public function setLanguageCode(User $user, string $languageCode): void
     {
-        // Genero il codice
-
-        $user->setLanguage($code);
-
+        $user->setLanguage($languageCode);
         $this->userRepository->save($user);
 
     }
